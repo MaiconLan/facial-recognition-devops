@@ -1,0 +1,46 @@
+version: '3.1'
+
+services:
+  postgres:
+    image: postgres
+    container_name: postgres
+    environment:
+      POSTGRES_PASSWORD: $POSTGRES_PASSWORD
+    ports:
+      - "5432:5432"
+    volumes:
+      - db-data:/var/lib/mysql/data
+    networks:
+      - postgres-network
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: $EMAIL
+      PGADMIN_DEFAULT_PASSWORD: $POSTGRES_PASSWORD
+    ports:
+      - "16543:80"
+    depends_on:
+      - postgres
+    networks:
+      - postgres-network
+
+  frontend:
+    container_name: frontend
+    build: ./facial-recognition-frontend/docker/Dockerfile
+    volumes:
+      - frontend:/usr/src/app
+    ports:
+      - 4200:4200
+    command: >
+      bash -c "npm install && ng serve --host 0.0.0.0 --port 4200"
+
+networks: 
+  postgres-network:
+    driver: bridge
+
+volumes:
+  db-data:
+  frontend:
+
