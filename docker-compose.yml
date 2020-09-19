@@ -26,15 +26,15 @@ services:
     networks:
       - postgres-network
 
-  frontend:
-    container_name: frontend
-    build: ./facial-recognition-frontend/docker/Dockerfile
-    volumes:
-      - frontend:/usr/src/app
-    ports:
-      - 4200:4200
-    command: >
-      bash -c "npm install && ng serve --host 0.0.0.0 --port 4200"
+  # frontend:
+  #  container_name: frontend
+  #  build: ./facial-recognition-frontend/docker/Dockerfile
+  #  volumes:
+  #    - frontend:/usr/src/app
+  #  ports:
+  #    - 4200:4200
+  #  command: >
+  #    bash -c "npm install && ng serve --host 0.0.0.0 --port 4200"
 
 networks: 
   postgres-network:
@@ -42,5 +42,5 @@ networks:
 
 volumes:
   db-data:
-  frontend:
+  #frontend:
 
